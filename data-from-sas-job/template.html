@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+        <title>Returning JSON Data from a Job</title>
+        <script>
+            function submitForm() {
+                var formData = new FormData();
+                // Create input parameters
+                formData.append("_program", "/Folder/Simple JSON");
+                formData.append("_action", "execute");
+                formData.append("_csrf" , "$CSRF$");
+                // Create the request object
+                var request = new XMLHttpRequest();
+                request.addEventListener("error", function(event) {
+                    alert("Something went wrong.");
+                });
+                request.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            // Store the returned JSON data in a variable for later use
+                            var JSONString = this.responseText;
+                            // Your code to post process the JSON data here
+                        }
+                        else {
+                            alert("Status: " + this.status);
+                        }
+                    }
+                };
+                request.open("post", "/SASJobExecution/");
+                // Submit the form
+                request.send(formData);
+            }
+            submitForm();
+        </script>
+        </head>
+        <body>
+        <!-- Content of your web application here -->
+        </body>
+    </html>
