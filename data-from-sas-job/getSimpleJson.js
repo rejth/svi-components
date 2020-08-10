@@ -5,7 +5,9 @@ const fs = require('fs');
 const
     baseUrl = "banff.ruspfraudvi.rus.sas.com",
     user = "user1",
-    password = "Go4thsas";
+    password = "Go4thsas",
+    program = '/Public/JobSimpleJSON',
+    action = 'execute';
 
 // const formData = new FormData();
 
@@ -24,7 +26,7 @@ const getJsonFromServer = () => {
         }
     })
     .then(response => response.json())
-    .then(({access_token}) => fetch(`http://${baseUrl}/SASJobExecution/?_program=/Public/JobSimpleJSON&_action=execute`, {
+    .then(({access_token}) => fetch(`http://${baseUrl}/SASJobExecution/?_program=${program}&_action=${action}`, {
         method: 'post',
         headers: {
             // 'Accept': 'application/json',
