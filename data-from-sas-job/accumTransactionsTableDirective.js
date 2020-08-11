@@ -83,8 +83,9 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                     // Записываем результат выполнения SAS Job в переменную для дальнейшей работы
                     let results = response.json();
                     // Достаем только те транзакции, с которыми связана текущая аккумулятивная транзакция, и загружаем в кастомный грид
-                    scope.accumTransactionsGrid.data = results.filter(e => function () {
-                        // TODO
+                    scope.accumTransactionsGrid.data = results.filter(function (e) {
+                        return (e.ACCOUNT_FROM == accountOne || e.ACCOUNT_FROM == accountTwo) &&
+                                (e.ACCOUNT_TO == accountOne || e.ACCOUNT_TO == accountTwo);
                     });
                 }
             }
