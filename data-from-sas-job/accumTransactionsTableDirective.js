@@ -7,7 +7,7 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
             promise = f => new Promise(result => f.then(result).catch(result)),
             postRequest = (url, data) => promise($http.post(url, data)),
             // Путь до SAS Job на CAS-сервере
-            jobFilePath = '/Public/JobSimpleJSON',
+            jobFilePath = '/Projects/SASCustom/Jobs/SimpleJSON',
             // Функция удаленного запуска SAS Job с помощью SAS Job Execution REST API
             getJsonFromJob = (jobFilePath) => {
                 return postRequest(`/SASJobExecution/?_program=${jobFilePath}&_action=execute`);
@@ -65,6 +65,10 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                         {
                             field: "transaction_dttm",
                             title: "Дата и время проведения транзакции"
+                        },
+                        {
+                            field: "emp_num",
+                            title: "RB работника"
                         }
                     ]
                 };

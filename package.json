@@ -1,0 +1,25 @@
+{
+  "name": "svi-components",
+  "version": "1.0.0",
+  "description": "Custom AngularJS components for SAS Visual Investigator web app.",
+  "main": "transactionsTableDirective.js",
+  "dependencies": {
+    "fetch": "^1.1.0",
+    "fs": "0.0.1-security"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rejth/svi-components.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rejth/svi-components/issues"
+  },
+  "homepage": "https://github.com/rejth/svi-components#readme"
+}

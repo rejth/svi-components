@@ -1,0 +1,25 @@
+@host = banff.ruspfraudvi.rus.sas.com:80
+
+// @name login
+POST http://sas.ec:@{{host}}/SASLogon/oauth/token/?grant_type=password&username=user1&password=Go4thsas
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+###
+@decision = select_test4_0
+
+POST http://{{host}}/microanalyticScore/modules/{{decision}}/steps/execute_internal
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.access_token}}
+
+{
+  "inputs":[
+    {
+      "name": "ACCOUNT_FIRST", "value" : "70601810787871111500"
+    },
+    {
+      "name": "ACCOUNT_SECOND", "value" : "42301810287870000000"
+    }
+  ]
+} 
