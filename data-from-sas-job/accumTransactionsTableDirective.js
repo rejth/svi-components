@@ -6,17 +6,16 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
         const
             promise = f => new Promise(result => f.then(result).catch(result)),
             postRequest = (url, data) => promise($http.post(url, data)),
-            // Путь до SAS Job на CAS-сервере
-            jobFilePath = '/Projects/SASCustom/Jobs/SimpleJSON',
-            // Функция удаленного запуска SAS Job с помощью SAS Job Execution REST API
-            getJsonFromJob = (jobFilePath) => {
-                return postRequest(`/SASJobExecution/?_program=${jobFilePath}&_action=execute`);
+            decisionName = 'select_test',
+            // Функция для запуска SID стратегии по MAS REST API
+            startDecision = (decisionName, data) => {
+                return postRequest(`/microanalyticScore/modules/${decisionName}/steps/execute_internal`, data);
             },
             // Функция для получения всех связанных с аккумулятивной транзакцией банковских счетов
             traversalSearch = (id) => {
                 return postRequest("/svi-sand/paths?expansionLimit=2000", {
                     "id": id,
-                    "type": "vi_accumulative_transaction",
+                    "type": "vi_accumulative_trnx",
                     "nextLevel": {
                         "vertexTypes": ["vi_account"]
                     }
@@ -73,25 +72,34 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                     ]
                 };
                 // Если находимся в карточке "Аккумулятивная транзакция", то исполняем следуюущую логику
-                if (scope.pageModel.mode === spbPageModes.VIEW && scope.pageModel.type === "vi_accumulative_transaction") {
+                if (scope.pageModel.mode === spbPageModes.VIEW && scope.pageModel.type === "vi_accumulative_trnx") {
                     // Получаем идентификатор аккумулятивной транзакции
                     let entityTypeId = scope.docId || (scope.pageModel && scope.pageModel.id) || scope.tempCreateId;
-                    // Получаем все связанные с транзакцией банковские счета. В рамках одной транзакции их два - отправитель и получатель
+                    // Получаем все связанные с транзакцией банковские счета
                     let endPoints = await traversalSearch(entityTypeId);
                     // Получаем идентификаторы этих счетов
                     let ids = endPoints.data.map(e => e.endpoints[0].id);
-                    let accountOne = ids[0];
-                    let accountTwo = ids[1];
-                    // Запускаем SAS Job с помощью SAS Job Execution REST API и принимаем таблицу в JSON формате
-                    let response = await getJsonFromJob(jobFilePath);
-                    // Записываем результат выполнения SAS Job в переменную для дальнейшей работы
-                    let results = response.json();
-                    // Достаем только те транзакции, с которыми связана текущая аккумулятивная транзакция, и загружаем в кастомный грид
-                    scope.accumTransactionsGrid.data = results.filter(function (e) {
-                        return (e.ACCOUNT_FROM == accountOne || e.ACCOUNT_FROM == accountTwo) &&
-                                (e.ACCOUNT_TO == accountOne || e.ACCOUNT_TO == accountTwo);
-                    });
-                }
+                    // Тело запроса по MAS REST API
+                    let requestBody = {
+                        "inputs": [{
+                                "name": "ACCOUNT_FIRST",
+                                "value": ids[0]
+                            },
+                            {
+                                "name": "ACCOUNT_SECOND",
+                                "value": ids[1]
+                            }
+                        ]
+                    }
+                    // Запускаем SID стратгию и ждем ответа
+                    let response = await startDecision(decisionName, requestBody);
+                    // Получаем результат выполнения SID стратегии в формате JSON String
+                    let results = response.data.outputs[0].value;
+                    // Преобразуем String в Object и достаем данные таблицы в качестве Array
+                    let transactions = JSON.parse(results)[1].data;
+                    // Загружаем данные в таблицу accumTransactionsGrid
+                    scope.accumTransactionsGrid.data = transactions;
+                };
             }
         };
     }
