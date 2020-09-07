@@ -98,7 +98,19 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                     // Преобразуем String в Object и достаем данные таблицы в качестве Array
                     let transactions = JSON.parse(results)[1].data;
                     // Загружаем данные в таблицу accumTransactionsGrid
-                    scope.accumTransactionsGrid.data = transactions;
+                    scope.accumTransactionsGrid.data = transactions.map(e => {
+                        return {
+                            account_from: e[0],
+                            account_to: e[1],
+                            client_fio_from: e[2],
+                            client_fio_to: e[3],
+                            currency: e[4],
+                            payment_rub: e[5],
+                            transaction_dttm: e[6],
+                            emp_num: e[7]
+                        }
+                    });
+                    scope.$apply();
                 };
             }
         };
