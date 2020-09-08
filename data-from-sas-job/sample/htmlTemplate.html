@@ -1,0 +1,29 @@
+<!-- http://banff.ruspfraudvi.rus.sas.com/SASJobExecution/?_program=/Public/JobSimpleJSON&_action=execute -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Returning JSON Data from a Job</title>
+        <style type="text/css">
+            .pointer {
+                cursor: pointer;
+            }
+        /* [Other Cascading Style Sheet code here] */
+        </style>
+    </head>
+    <body role="main">
+        <div>SAS<sup>&#174;</sup> Job Execution</div>
+        <h1>Simple JSON</h1>
+        <p>
+            The JSON procedure creates simple JSON content that returns the data in the SASHELP.CLASS table.
+        </p>
+        <hr/>
+        <form action="http://banff.ruspfraudvi.rus.sas.com/SASJobExecution/" target="_SASResults">
+        <input type="hidden" name="_program" value="/Public/JobSimpleJSON"/>
+        <input type="hidden" name="_action" value="execute"/>
+        <input type="hidden" name="_output_type" value="ods_html5"/>
+        <input type="submit" value="Run code" class="pointer"/>
+        <input type="checkbox" name="_debug" id="_debug" value="log" class="pointer"/>
+        <label for="_debug">Show SAS Log</label>
+        </form>
+    </body>
+</html>
