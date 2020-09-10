@@ -63,7 +63,8 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                         },
                         {
                             field: "transaction_dttm",
-                            title: "Дата и время проведения транзакции"
+                            title: "Дата и время проведения транзакции",
+                            format: "{0: dd.MM.yyyy HH:mm:ss}"
                         },
                         {
                             field: "emp_num",
@@ -106,7 +107,7 @@ angular.module("sngPageBuilderCustom").spbDirective("{{name}}", [
                             client_fio_to: e[3],
                             currency: e[4],
                             payment_rub: e[5],
-                            transaction_dttm: e[6],
+                            transaction_dttm: new Date(Date(e[6])),
                             emp_num: e[7]
                         }
                     });
