@@ -1,4 +1,4 @@
-CREATE TABLE public.transactions
+CREATE TABLE etl_stg.not_fraud_transactions
 (
   "ACCOUNT_FROM" character varying(20),
   "ACCOUNT_TO" character varying(20),
