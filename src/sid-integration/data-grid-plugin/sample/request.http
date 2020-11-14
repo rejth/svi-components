@@ -1,7 +1,7 @@
-@host = banff.ruspfraudvi.rus.sas.com
+@host = server
 
 // @name login
-POST http://sas.ec:@banff.ruspfraudvi.rus.sas.com/SASLogon/oauth/token/?grant_type=password&username=user1&password=Go4thsas
+POST http://sas.ec:@banff.ruspfraudvi.rus.sas.com/SASLogon/oauth/token/?grant_type=password&username=user&password=password
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
@@ -22,4 +22,4 @@ Authorization: Bearer {{login.response.body.$.access_token}}
       "name": "ACCOUNT_SECOND", "value" : "40817810987870008924"
     }
   ]
-} 
+}

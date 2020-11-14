@@ -1,20 +1,12 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
-// const FormData = require('form-data');
 
 const
-    baseUrl = "banff.ruspfraudvi.rus.sas.com",
-    user = "user1",
-    password = "Go4thsas",
+    baseUrl = "server",
+    user = "user",
+    password = "password",
     program = '/Public/JobSimpleJSON',
     action = 'execute';
-
-// const formData = new FormData();
-
-// formData.append("_program", "/Public/JobSimpleJSON");
-// formData.append("_action", "execute");
-// formData.append("_output_type", "ods_html5");
-// formData.append("_csrf" , "$CSRF$");
 
 const getJsonFromServer = () => {
     fetch(`http://${baseUrl}/SASLogon/oauth/token?grant_type=password&username=${user}&password=${password}`, {
@@ -29,11 +21,9 @@ const getJsonFromServer = () => {
     .then(({access_token}) => fetch(`http://${baseUrl}/SASJobExecution/?_program=${program}&_action=${action}`, {
         method: 'post',
         headers: {
-            // 'Accept': 'application/json',
-            // 'Content-Type': 'form/multipart',
+            'Accept': 'application/json',
             'Authorization': 'Bearer ' + access_token
         },
-        // body: formData
     }))
     .then(response => {
         console.log(response);
@@ -47,7 +37,6 @@ const getJsonFromServer = () => {
                 console.log('Finished!');
             });
         });
-    // .then(({response}) => console.log(JSON.stringify(response)));
     });
 };
 

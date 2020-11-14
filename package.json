@@ -4,10 +4,12 @@
   "description": "Custom AngularJS components for SAS Visual Investigator web app.",
   "main": "transactionsTableDirective.js",
   "dependencies": {
-    "fetch": "^1.1.0",
-    "fs": "0.0.1-security"
+    "fetch": "^1.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,8 +1,0 @@
-{
-  "user": "dbmsowner",
-  "password": "hrgauiUWU7E8uew8Oor3wHPgalV3N92",
-  "host": "ruspfraudvi.rus.sas.com",
-  "port": 5432,
-  "database": "banff",
-  "ssl": true
-}
